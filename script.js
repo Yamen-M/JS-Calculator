@@ -1,3 +1,5 @@
+const display = document.querySelector(".display")
+
 const buttons = [
     { value: '7', type: 'number' },
     { value: '8', type: 'number' },
@@ -17,6 +19,8 @@ const buttons = [
     { value: '+', type: 'operator' },
 ];
 
+const allButtons = document.querySelector(".buttonsContainer")
+
 const btnContainer = document.querySelector(".buttons")
 
 buttons.forEach(btn => {
@@ -27,6 +31,116 @@ buttons.forEach(btn => {
     btnContainer.appendChild(button);
 });
 
+allButtons.addEventListener('click', (event) => {
+      if (event.target.classList.contains('btn')) {
+        this.btnClick(event.target.dataset.value);
+      }
+});
+
+let leftOperand = '';
+let rightOperand = '';
+let operator = '';
+let evalPressed = false;
+let errorState = false;
+
+function isNumber(value){
+    return typeof(value) === 'number' && !isNaN(value);
+}
+function setNumber(value) {
+
+    if (evalPressed) {
+        if (operator === '') {
+            leftOperand = value.toString();
+            display.textContent = leftOperand;
+        } else {
+            rightOperand = value.toString();
+            display.textContent = rightOperand;
+        }
+        evalPressed = false;
+        return;
+    }
+
+    if (operator === '') {
+        leftOperand += value.toString();
+        display.textContent = leftOperand;
+    } else {
+        rightOperand += value.toString();
+        display.textContent = rightOperand;
+    }
+}
+
+function isOperator(value){
+    return ['+', '-', '*', '/'].includes(value);;
+}
+
+function setOperator(value)
+{
+    if(operator !== ''){
+        evaluate();
+        operator = value;
+    }
+    else
+        operator = value;    
+    
+    evalPressed = false;
+}
+
+function evaluate(){
+
+    if (!operator || rightOperand === '') {
+        evalPressed = true;
+        return;
+    }
+
+    const result = operate(operator, leftOperand, rightOperand);    
+    if (typeof result === 'string') {
+        display.textContent = result;
+        errorState = true;
+        setTimeout(clearValues, 2000);
+    } 
+    else {
+        leftOperand = result.toString();
+        display.textContent = leftOperand;
+    }
+    rightOperand = '';
+    operator = '';
+    evalPressed = true;
+}
+
+function clearValues()
+{    
+    display.textContent = '0';
+    leftOperand = '';
+    rightOperand = '';
+    operator = '';
+    evalPressed = false;
+}
+
+function deleteLastInput()
+{
+    if (rightOperand) {
+        rightOperand = rightOperand.slice(0, -1);
+        display.textContent = rightOperand || '0';
+    } 
+    else if (leftOperand) {
+        leftOperand = leftOperand.slice(0, -1);
+        display.textContent = leftOperand || '0';
+    }
+}
+
+function btnClick(value)
+{
+    if(isNumber(parseInt(value)))
+        setNumber(parseInt(value));
+    else if(isOperator(value))
+        setOperator(value);
+    else if(value === '=')
+        evaluate();
+    else if(value === 'AC')
+        clearValues();
+    else if(value === '⌫')
+        deleteLastInput();
+}
 
 function add(a, b)
 {
@@ -46,30 +160,38 @@ function multiply(a, b)
 function divide(a ,b)
 {
     if(b === 0)
-        return "Denom cannot be 0! (-_-)"
+        return "Denom cannot be 0! (-_-)";
     else
         return a/b;
 }
+function operate(operator, val1, val2) {
 
-function operate(operator, val1, val2)
-{
+    let a = parseFloat(val1);
+    let b = parseFloat(val2);
     let result = 0;
-    switch(operator)
-    {
-        case "+":
-            result = add(val1,val2);
-            break;
-        case "-":
-            result = subtract(val1,val2);
-            break;
-        case "*":
-            result = multiply(val1, val2);
-            break;
-        case "/":
-            result = divide(val1, val2);
-            break;
-        default:
-            alert("ERROR-SWITCH!");
+
+    if (operator !== '' && val2 !== '') {
+
+        switch (operator) {
+            case '+':
+                result = add(a, b);
+                break;
+            case '-':
+                result = subtract(a, b);
+                break;
+            case '*':
+                result = multiply(a, b);
+                break;
+            case '/':
+                result = divide(a, b);
+                break;
+            default:
+                alert("ERROR-SWITCH!");
+        }
     }
+    else {
+        return val1;
+    }
+
     return result;
 }
