@@ -1,70 +1,95 @@
-body{
+body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    height: 100vh;
 }
-.mainContainer{
-    margin-top: 100px;
+
+.mainContainer {
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
     width: 300px;
-    gap: 5px;
-    border: 5px solid black;
+    gap: 10px;
+    border: 5px solid #333;
     border-radius: 15px;
-    padding: 15px;
+    padding: 20px;
+    background-color: #333;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .display {
-    grid-column: span 4;
+    height: 50px;
     background: #222;
     color: #0f0;
     font-size: 2em;
     text-align: right;
-    padding: 10px;
-    border-radius: 5px;
-}
-.top-btn{
+    padding: 15px;
+    border-radius: 10px;
+    width: 275px;
+    margin: 0 auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     display: flex;
-    gap: 5px;
+    align-items: center;
+    justify-content: flex-end;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
 }
+
+.top-btn {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
 .buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-top: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .btn {
-  flex: 1 1 22%;
-  padding: 20px;
-  font-size: 1.2rem;
-  border-radius: 10px;
-  border: none;
-  background-color: #ddd;
-  cursor: pointer;
-  transition: background 0.2s;
+    flex: 1 1 calc(25% - 10px);
+    padding: 20px;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    border: none;
+    background-color: #ddd;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn:hover {
-  background-color: #ccc;
+    background-color: #ccc;
+}
+
+.btn:active {
+    transform: scale(0.95);
 }
 
 .btn-operator {
-  background-color: #ffca3a;
+    background-color: #ffca3a;
 }
 
 .btn-action {
-  background-color: #f94144;
-  color: white;
+    background-color: #f94144;
+    color: white;
 }
 
 .btn-equals {
-  background-color: #277da1;
-  color: white;
+    background-color: #277da1;
+    color: white;
 }
 
-.buttonsContainer{
+.buttonsContainer {
     width: 300px;
-    gap: 50px;
+    gap: 10px;
 }

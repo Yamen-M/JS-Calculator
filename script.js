@@ -14,7 +14,7 @@ const buttons = [
     { value: '3', type: 'number' },
     { value: '-', type: 'operator' },
     { value: '0', type: 'number' },
-    { value: '.', type: 'number' },
+    { value: '.', type: 'decimal' },
     { value: '=', type: 'equals' },
     { value: '+', type: 'operator' },
 ];
@@ -33,7 +33,7 @@ buttons.forEach(btn => {
 
 allButtons.addEventListener('click', (event) => {
       if (event.target.classList.contains('btn')) {
-        this.btnClick(event.target.dataset.value);
+        btnClick(event.target.dataset.value);
       }
 });
 
@@ -47,6 +47,8 @@ function isNumber(value){
     return typeof(value) === 'number' && !isNaN(value);
 }
 function setNumber(value) {
+    display.style.fontSize = "2em";
+    const maxDigits = 15;
 
     if (evalPressed) {
         if (operator === '') {
@@ -60,12 +62,36 @@ function setNumber(value) {
         return;
     }
 
-    if (operator === '') {
-        leftOperand += value.toString();
-        display.textContent = leftOperand;
-    } else {
-        rightOperand += value.toString();
-        display.textContent = rightOperand;
+    if (value === '.') {
+
+        if (operator === '') {
+            if (!leftOperand.includes('.')) {
+                leftOperand += leftOperand === '' ? '0.' : value;
+                display.textContent = leftOperand;
+            }
+        } else {
+            if (!rightOperand.includes('.')) {
+                rightOperand += rightOperand === '' ? '0.' : value;
+                display.textContent = rightOperand;
+            }
+        }
+    } 
+    else {
+
+        if (operator === '') {
+
+            if (leftOperand.length < maxDigits) {
+                leftOperand += value.toString();
+                display.textContent = leftOperand;
+            }
+        } 
+        else {
+
+            if (rightOperand.length < maxDigits) {
+                rightOperand += value.toString();
+                display.textContent = rightOperand;
+            }
+        }
     }
 }
 
@@ -110,6 +136,7 @@ function evaluate(){
 function clearValues()
 {    
     display.textContent = '0';
+    display.style.fontSize = "2em";
     leftOperand = '';
     rightOperand = '';
     operator = '';
@@ -134,6 +161,8 @@ function btnClick(value)
         setNumber(parseInt(value));
     else if(isOperator(value))
         setOperator(value);
+    else if(value === '.')
+        setNumber(value);
     else if(value === '=')
         evaluate();
     else if(value === 'AC')
@@ -192,6 +221,9 @@ function operate(operator, val1, val2) {
     else {
         return val1;
     }
+
+    if(result.toString().length > 15)
+        display.style.fontSize = "1.5em";
 
     return result;
 }
