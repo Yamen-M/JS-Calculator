@@ -30,7 +30,9 @@ buttons.forEach(btn => {
     button.classList.add('btn', `btn-${btn.type}`);
     btnContainer.appendChild(button);
 });
-
+document.addEventListener('keydown', (event) => {
+    btnClick(event.key);
+})
 allButtons.addEventListener('click', (event) => {
       if (event.target.classList.contains('btn')) {
         btnClick(event.target.dataset.value);
