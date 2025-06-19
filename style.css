@@ -1,0 +1,70 @@
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.mainContainer{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    gap: 5px;
+    border: 5px solid black;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.display {
+    grid-column: span 4;
+    background: #222;
+    color: #0f0;
+    font-size: 2em;
+    text-align: right;
+    padding: 10px;
+    border-radius: 5px;
+}
+.top-btn{
+    display: flex;
+    gap: 5px;
+}
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.btn {
+  flex: 1 1 22%;
+  padding: 20px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  border: none;
+  background-color: #ddd;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn:hover {
+  background-color: #ccc;
+}
+
+.btn-operator {
+  background-color: #ffca3a;
+}
+
+.btn-action {
+  background-color: #f94144;
+  color: white;
+}
+
+.btn-equals {
+  background-color: #277da1;
+  color: white;
+}
+
+.buttonsContainer{
+    width: 300px;
+    gap: 50px;
+}
